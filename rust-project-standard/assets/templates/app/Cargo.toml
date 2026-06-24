@@ -1,0 +1,19 @@
+[package]
+name = "__PROJECT__"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+default = []
+openai = ["adapters/openai"]
+
+[dependencies]
+kernel = { path = "../crates/kernel" }
+domain = { path = "../crates/domain" }
+adapters = { path = "../crates/adapters" }
+anyhow.workspace = true
+tracing.workspace = true

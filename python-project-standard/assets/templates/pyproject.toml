@@ -1,0 +1,34 @@
+[project]
+name = "__PACKAGE_NAME__"
+requires-python = ">=3.13"
+dependencies = ["pydantic", "pydantic-settings[yaml]", "beartype", "jinja2"]
+
+[project.optional-dependencies]
+dev = ["mypy", "ruff", "pytest", "hypothesis"]
+# 厂商 SDK 进可选 extras:核心/测试不依赖,装了才用
+openai = ["openai"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/__PACKAGE_NAME__"]
+# hatchling 默认把包目录下的非 .py 文件(如 prompts/*.md)一并打进 wheel
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_unreachable = true
+
+[tool.ruff]
+target-version = "py314"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "ANN", "B", "SIM", "RUF"]
+
+[tool.pytest.ini_options]
+addopts = "-q --import-mode=importlib"
+testpaths = ["tests"]
+filterwarnings = ["error"]   # warnings-as-errors;已知噪声依赖再逐条 ignore

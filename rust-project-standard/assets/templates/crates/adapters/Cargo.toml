@@ -1,0 +1,18 @@
+[package]
+name = "adapters"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+default = []
+# 接真实 SDK 时改为:openai = ["dep:async-openai"]
+openai = []
+
+[dependencies]
+domain = { path = "../domain" }
+# 厂商 SDK 只在本 crate、且 optional + feature 门控,例如:
+# async-openai = { version = "0.x", optional = true }

@@ -1,0 +1,36 @@
+# XcodeGen 配置:生成一个瘦 iOS app target,link 本地 SwiftPM package 的 AppCore 库。
+# app 仅做 UI 与组装;领域逻辑全在 package。运行:`make scaffold-xcode`(或 `xcodegen generate`)。
+
+name: __PACKAGE__App
+
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+
+# 引入本地 SwiftPM package(当前目录)。
+packages:
+  __PACKAGE__:
+    path: .
+
+targets:
+  __PACKAGE__App:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: AppShell
+    dependencies:
+      # link 本地 package 的库 product;app 壳 import AppCore 自行组装。
+      - package: __PACKAGE__
+        product: AppCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.__PACKAGE__App
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+        # app 门禁:警告即错误(对应 ci.sh §5)。
+        SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES

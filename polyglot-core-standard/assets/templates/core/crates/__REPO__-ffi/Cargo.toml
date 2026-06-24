@@ -1,0 +1,26 @@
+[package]
+name = "__REPO__-ffi"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+
+[lib]
+# `__REPO___core` is the UniFFI namespace → the dylib is `lib__REPO___core.dylib` and the
+# generated Swift binding is `apple/Generated/__REPO___core.swift` (mirror versions.toml).
+name = "__REPO___core"
+crate-type = ["lib", "cdylib", "staticlib"]
+
+# THE ONE CONTROLLED EXIT from the workspace `unsafe_code = "forbid"` (non-negotiable 4 +
+# core/CLAUDE.md). UniFFI's generated scaffolding emits FFI `unsafe`, so this crate does NOT
+# inherit `[lints] workspace = true`; it drops the forbid to `deny` (generator-emitted,
+# allow-annotated unsafe still compiles). Clippy escape-hatch lints stay on.
+[lints.rust]
+unsafe_code = "deny"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+
+[dependencies]
+__REPO__-core = { path = "../__REPO__-core" }
+thiserror.workspace = true
+uniffi = { workspace = true, features = ["cli"] }   # `cli` provides the uniffi-bindgen binary

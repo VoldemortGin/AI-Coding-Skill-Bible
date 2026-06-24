@@ -1,0 +1,30 @@
+[workspace]
+resolver = "3"
+members = ["crates/*", "app"]
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.85"
+
+# 严格 lint 在工作区统一声明(各 crate 用 `[lints] workspace = true` 继承)。
+# 声明为 warn;门禁 `clippy -- -D warnings` 把警告提升为错误。
+[workspace.lints.rust]
+unsafe_code = "forbid"          # 硬禁:#[allow] 无法覆盖(无逃生舱)。确需 unsafe 的 crate 见 standard.md §2 受控出口
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+unwrap_used = "warn"            # 不静默失败:用 ? / 显式处理(测试除外,见 clippy.toml)
+expect_used = "warn"
+panic = "warn"
+# 想更严可加 pedantic / nursery(噪声较大、需逐 lint 调,故默认不开):
+# pedantic = { level = "warn", priority = -1 }
+
+# 依赖版本在工作区统一,各 crate `dep.workspace = true`
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+thiserror = "2"
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+figment = { version = "0.10", features = ["env", "toml"] }
+minijinja = "2"

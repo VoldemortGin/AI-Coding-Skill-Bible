@@ -1,0 +1,5 @@
+# polyglot-core-standard non-negotiable 4: this directory holds the VENDORED UniFFI output
+# (__REPO___core.swift, emitted by `make gen-bindings`). swift-format skips any directory that
+# contains this marker, so the generated binding is never formatted/linted. swiftlint excludes
+# it too (.swiftlint.yml `excluded:`), and ../.gitattributes marks it `linguist-generated`.
+*

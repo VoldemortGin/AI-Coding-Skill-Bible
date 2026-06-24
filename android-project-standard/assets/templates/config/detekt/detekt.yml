@@ -1,0 +1,86 @@
+# detekt 配置。门禁 `./gradlew detekt`(`maxIssues: 0` → 任何 finding 即失败)。
+# 核心纪律:关死逃生舱 —— `!!` / 未受检 `as` / 滥用 `lateinit` / `GlobalScope` 设为 error。
+# 与 .editorconfig(ktlint)互补:detekt 管 lint + 逃生舱,ktlint 管格式。
+# buildUponDefaultConfig=true(见根 build.gradle.kts)→ 此文件在默认规则集之上做覆盖。
+
+build:
+  maxIssues: 0            # 零容忍:任何 finding 即整体失败(零警告门)
+  excludeCorrectable: false
+
+config:
+  validation: true
+  warningsAsErrors: true  # 配置项写错(拼错规则名等)也算失败
+
+# ── 逃生舱禁令(severity: error,显式标注;maxIssues:0 下任何命中都失败) ──────────────
+potential-bugs:
+  active: true
+  # `!!` 非空断言 —— 用 `?.` / `requireNotNull(x) { reason }` / 显式分支替代。
+  UnsafeCallOnNullableType:
+    active: true
+    severity: error
+  # 未受检 `as` 强转 —— 用 `as?` + 失败分支。
+  UnsafeCast:
+    active: true
+    severity: error
+  CastToNullableType:
+    active: true
+    severity: error
+  # 滥用 lateinit —— 改用构造注入 / 惰性初始化 / 可空 + 显式处理。
+  LateinitUsage:
+    active: true
+    severity: error
+
+style:
+  active: true
+  WildcardImport:
+    active: true
+    severity: error
+  MaxLineLength:
+    active: true
+    maxLineLength: 120
+  ReturnCount:
+    active: true
+    max: 5
+  ForbiddenComment:
+    active: false        # 允许 TODO/FIXME 注释(对应 swiftlint 关掉 todo 规则)
+  MagicNumber:
+    active: true
+    ignorePropertyDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+    ignoreNamedArgument: true
+    excludes: ['**/test/**', '**/androidTest/**']
+
+exceptions:
+  active: true
+  # 不静默吞错:catch 后丢弃异常 = error。
+  SwallowedException:
+    active: true
+    severity: error
+  TooGenericExceptionCaught:
+    active: true
+  ThrowingExceptionFromFinally:
+    active: true
+  ReturnFromFinally:
+    active: true
+
+coroutines:
+  active: true
+  # `GlobalScope.launch/async` 破坏结构化并发 —— 用注入的 CoroutineScope。
+  GlobalCoroutineUsage:
+    active: true
+    severity: error
+  RedundantSuspendModifier:
+    active: true
+  SuspendFunWithFlowReturnType:
+    active: true
+
+naming:
+  active: true
+
+complexity:
+  active: true
+  TooManyFunctions:
+    active: false        # 模板骨架放宽;真实项目按需开启
+  LongMethod:
+    active: true
+    threshold: 80

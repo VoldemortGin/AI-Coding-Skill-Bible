@@ -1,0 +1,22 @@
+# cargo-deny:把许可证 / 安全公告 / 依赖卫生做成门禁的一部分(SCA)。
+# 注:cargo-deny 的配置 schema 随版本演进;以下为 v2(0.14+)。若 `cargo deny check`
+# 报 schema 错,按提示微调,或 `cargo deny init` 重生成后把下面的 allow 列表并回去。
+[advisories]
+version = 2
+yanked = "deny"
+# 有未忽略的 RUSTSEC 安全公告即失败
+
+[licenses]
+version = 2
+# 只允许许可的 license;copyleft(AGPL/GPL/SSPL 等)默认不在列 → 失败,
+# 避免把强 copyleft 依赖泄进闭源/企业产品。新依赖被拦时把其 SPDX 加进 allow。
+allow = ["MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "ISC", "Unicode-3.0", "Zlib"]
+confidence-threshold = 0.9
+
+[bans]
+multiple-versions = "warn"   # 同一 crate 多版本并存:提醒收敛
+wildcards = "deny"           # 禁止 "*" 版本
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

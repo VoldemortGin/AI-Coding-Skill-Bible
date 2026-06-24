@@ -1,0 +1,18 @@
+# SwiftLint for the __REPO__ Swift host. Full ruleset → swift-project-standard. The ONE
+# seam-critical job here (polyglot-core-standard non-negotiable 4): EXCLUDE `Generated/` — the
+# vendored UniFFI output is a machine artifact and is never linted. The escape-hatch bans below
+# apply to the hand-written wrapper (Sources/__REPO__/CoreClient.swift), NOT to generated code.
+included:
+  - Sources
+
+excluded:
+  - Generated        # vendored UniFFI binding — linguist-generated, gate-excluded
+  - .build
+
+# Close the escape hatches in the governed wrapper.
+opt_in_rules:
+  - force_unwrapping
+
+force_unwrapping: error
+force_cast: error
+force_try: error

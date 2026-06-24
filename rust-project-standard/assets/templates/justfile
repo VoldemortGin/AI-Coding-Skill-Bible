@@ -1,0 +1,11 @@
+# 完整门禁(唯一正确性判据);也可直接 ./ci.sh
+check:
+    ./ci.sh
+
+# 本地快速迭代
+test:
+    cargo test
+
+fmt:
+    cargo fmt --all
+    cargo clippy --all-targets --all-features --fix --allow-dirty

@@ -1,0 +1,32 @@
+# ktlint 通过 .editorconfig 读取规则(格式 gate,对应 swift-format / cargo fmt)。
+# 门禁 `./gradlew ktlintCheck`;自动修复 `./gradlew ktlintFormat`。
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{kt,kts}]
+indent_size = 4
+indent_style = space
+max_line_length = 120
+ktlint_code_style = ktlint_official
+# 禁通配 import(与 detekt 的 WildcardImport 互补,双向钉死)。
+ktlint_standard_no-wildcard-imports = enabled
+ktlint_standard_filename = enabled
+# 允许尾随逗号(与现代 Kotlin 风格一致)。
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+
+# 生成绑定永不格式化:vendored 工件,治理移到手写 bridge(polyglot-core-standard 第 4 条)。
+# Gradle 侧也排除(见根 build.gradle.kts 的 ktlint filter);此处为双保险。
+[**/uniffi/**.{kt,kts}]
+ktlint = disabled
+
+[**/generated/**.{kt,kts}]
+ktlint = disabled
+
+[*.{json,yml,yaml,toml}]
+indent_size = 2

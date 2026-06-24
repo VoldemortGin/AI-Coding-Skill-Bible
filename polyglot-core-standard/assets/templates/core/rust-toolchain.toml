@@ -1,0 +1,5 @@
+# Pinned Rust toolchain (polyglot-core-standard non-negotiable 7).
+# Mirror ../versions.toml [toolchains].rust — the composed gate + CI read that matrix.
+[toolchain]
+channel = "1.85"
+components = ["rustfmt", "clippy"]

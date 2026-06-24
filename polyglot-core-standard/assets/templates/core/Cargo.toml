@@ -1,0 +1,31 @@
+# __REPO__ core — the Rust workspace = the single source of truth (polyglot-core-standard).
+# Conforms to rust-project-standard in full (workspace, forbid(unsafe_code), strict clippy,
+# zero-warning gate via ./ci.sh). The cross-language contract is declared HERE — in the
+# __REPO__-ffi (UniFFI, generated) and __REPO__-py (PyO3, hand-written) crates — and nowhere
+# else; hosts DERIVE their bindings from it. Generator versions are pinned below and mirrored
+# in ../versions.toml [generators] (non-negotiable 7).
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+edition = "2021"        # conservative baseline for UniFFI 0.28 / PyO3 0.23 generated code
+rust-version = "1.85"   # mirror rust-toolchain.toml + ../versions.toml [toolchains].rust
+
+# Strict lints declared once; inherited via `[lints] workspace = true`. The gate
+# (`clippy -- -D warnings`) promotes these warnings to errors. The two FFI crates opt OUT of
+# the unsafe forbid (their Cargo.toml sets `unsafe_code = "deny"`) — the ONE controlled exit.
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+unwrap_used = "warn"   # nothing reachable across an FFI boundary may panic (non-negotiable 3)
+expect_used = "warn"
+panic = "warn"
+
+[workspace.dependencies]
+thiserror = "2"
+serde = { version = "1", features = ["derive"] }
+uniffi = "0.28"        # generated-binding posture (Swift/Kotlin/Python) — pinned, mirror versions.toml
+pyo3 = "0.23"          # hand-written-binding posture (Python native ext) — pinned, mirror versions.toml

@@ -1,0 +1,14 @@
+node_modules/
+.turbo/
+dist/
+.next/
+coverage/
+*.tsbuildinfo
+
+# 本地环境(secrets 只来自 env,绝不提交)
+.env
+.env.local
+.env.*.local
+
+# 编辑器/系统
+.DS_Store

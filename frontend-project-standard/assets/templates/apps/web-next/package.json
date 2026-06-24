@@ -1,0 +1,29 @@
+{
+  "name": "@__SCOPE__/web-next",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run --passWithNoTests",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@__SCOPE__/adapters": "workspace:*",
+    "@__SCOPE__/domain": "workspace:*",
+    "@__SCOPE__/kernel": "workspace:*",
+    "next": "^15.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.13",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

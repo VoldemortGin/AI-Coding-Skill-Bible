@@ -1,0 +1,62 @@
+# SwiftLint 配置。门禁 `swiftlint --strict`(任何 warning 也算失败)。
+# 核心纪律:关死逃生舱 —— force_unwrapping / force_cast / force_try 视为 error。
+
+# 只扫源码;排除构建产物。
+included:
+  - Sources
+  - Tests
+
+excluded:
+  - .build
+  - DerivedData
+
+# 默认关闭、需显式开启的规则:强制开启逃生舱检测。
+opt_in_rules:
+  - force_unwrapping
+  - explicit_init
+  - empty_count
+  - empty_string
+  - first_where
+  - last_where
+  - contains_over_first_not_nil
+  - redundant_nil_coalescing
+  - toggle_bool
+  - unneeded_parentheses_in_closure_argument
+  - sorted_first_last
+
+# 把逃生舱从默认 warning 提升为 error。
+force_unwrapping:
+  severity: error
+force_cast: error
+force_try: error
+
+# 与 swift-format 协同:行宽对齐 100(超长仅警告,避免与 reflow 打架)。
+line_length:
+  warning: 100
+  error: 200
+  ignores_comments: true
+  ignores_urls: true
+
+# 类型/文件体量阈值放宽到合理范围,避免模板骨架误报。
+type_body_length:
+  warning: 300
+  error: 400
+
+file_length:
+  warning: 500
+  error: 800
+
+# 标识符:允许常见短名(如 id、lhs、rhs)。
+identifier_name:
+  min_length:
+    warning: 1
+    error: 1
+  excluded:
+    - id
+    - lhs
+    - rhs
+
+# 关闭对项目结构无意义的噪声规则。
+disabled_rules:
+  - todo
+  - trailing_comma

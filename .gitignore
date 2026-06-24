@@ -1,0 +1,16 @@
+# OS / editor
+.DS_Store
+
+# Python (scaffold/conformance scripts)
+__pycache__/
+*.pyc
+.venv/
+
+# Build artifacts that scaffold.py / conformance runs may emit
+.gradle/
+build/
+.build/
+DerivedData/
+node_modules/
+target/
+dist/

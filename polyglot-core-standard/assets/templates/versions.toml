@@ -1,0 +1,22 @@
+# __REPO__ — the single declaration of every pinned toolchain + binding generator
+# (polyglot-core-standard, non-negotiable 7). The composed gate (Makefile) and CI both
+# read this. Generator-version skew is the subtlest cross-language drift source — the
+# generated output of uniffi 0.27 vs 0.28 differs, so a host can silently desync from the
+# core without any interface change. Pin it explicitly; mirror each value in its sub-tree.
+
+[toolchains]
+rust   = "1.85.0"   # mirror core/rust-toolchain.toml
+swift  = "6.0"      # Xcode-bundled language mode; mirror apple/.swift-version
+python = "3.13"     # mirror python/.python-version
+kotlin = "2.1.0"    # mirror android Gradle (if present)
+
+[generators]
+# Pinned in core/Cargo.toml; restated here as the matrix of record.
+uniffi = "0.28"     # generated bindings posture (Swift / Kotlin / Python)
+pyo3   = "0.23"     # hand-written binding-layer posture (Python native extension)
+
+[bindings]
+# Posture per host: "generated" (vendored, gate-excluded, drift-guarded)
+#                 | "handwritten" (governed core code + drift-guarded published stub)
+apple  = "generated"     # uniffi → apple/Generated/__REPO___core.swift
+python = "handwritten"   # pyo3 module in core + python/src/__REPO__/_native.pyi stub

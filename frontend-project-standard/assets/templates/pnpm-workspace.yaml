@@ -1,0 +1,5 @@
+# pnpm workspace。`packages/*` glob 自动纳入新建的领域包(像 Cargo workspace,
+# scaffold 新增 packages/<domain>/ 后无需修改本文件)。apps/* 为薄壳。
+packages:
+  - "packages/*"
+  - "apps/*"

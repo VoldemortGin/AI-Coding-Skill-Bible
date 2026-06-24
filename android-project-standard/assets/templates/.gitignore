@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+build/
+**/build/
+local.properties
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Keystore / secrets
+keystore.properties
+*.keystore
+*.jks
+.env
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# 注意:Gradle wrapper(gradle/wrapper/*.jar + gradlew)应 **提交**,不要 ignore。
+# 生成绑定按 polyglot-core-standard:tracked + linguist-generated + gate-excluded(不在此 ignore)。

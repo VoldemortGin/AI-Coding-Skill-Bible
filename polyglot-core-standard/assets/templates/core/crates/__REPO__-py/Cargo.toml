@@ -1,0 +1,25 @@
+[package]
+name = "__REPO__-py"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+
+[lib]
+# `_native` is the compiled Python module: imported as `__REPO__._native`, its published view
+# is the drift-guarded stub `python/src/__REPO__/_native.pyi` (mirror versions.toml [bindings]).
+name = "_native"
+crate-type = ["cdylib"]
+
+# Controlled exit from the workspace `unsafe_code = "forbid"` (same posture as __REPO__-ffi):
+# PyO3's #[pymodule]/#[pyfunction] scaffolding emits FFI `unsafe`, so drop the forbid to `deny`
+# rather than inheriting it. Unlike the generated UniFFI file, THIS binding layer is governed
+# core code — rust-project-standard applies in full.
+[lints.rust]
+unsafe_code = "deny"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+
+[dependencies]
+__REPO__-core = { path = "../__REPO__-core" }
+pyo3 = { workspace = true, features = ["extension-module"] }

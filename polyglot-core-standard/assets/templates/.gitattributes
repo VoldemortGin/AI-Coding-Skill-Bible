@@ -1,0 +1,8 @@
+# Derived cross-language bindings are vendored artifacts: machine-generated from the core
+# (the single source of truth), excluded from language gates, never hand-edited.
+# `linguist-generated` collapses them in diffs/reviews and excludes them from language stats.
+# This is the .gitattributes half of non-negotiable 4; the lint-config excludes are the
+# other half (e.g. apple/.swiftlint.yml `excluded:`, python ruff `extend-exclude`).
+apple/Generated/**            linguist-generated=true
+python/src/*/_native.pyi      linguist-generated=true
+**/bindings/**/generated/**   linguist-generated=true
