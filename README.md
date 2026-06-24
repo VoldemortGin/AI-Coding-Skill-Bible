@@ -72,6 +72,10 @@ python <skill>/scripts/check_conformance.py <project_root>
 - **Scale along two axes, size *and* domain.** Each standard has a *universal spine* that holds for any project in its language, plus an *AI-triggered layer* (the provider seam + mock-as-default + prompt discipline) that only switches on once the project actually calls a model. A pure library/CLI takes the spine and skips the AI layer — bolting on a mock provider where there's no model is cargo-culting, not conformance.
 - **The gate is the only judge.** "Looks fine" is never the bar; `./ci.sh` / `make check` green is. Pin it with a pre-push hook; mirror it in CI.
 
+## License
+
+[MIT](LICENSE) © 2026 Han Lin — use, adapt, and share freely.
+
 ---
 
 *These standards are model-agnostic and intentionally opinionated. Adapt the thresholds to your project; keep the spine.*
