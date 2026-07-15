@@ -1,0 +1,40 @@
+# Version catalog: pin every toolchain + library + plugin version (a single matrix).
+# In a polyglot repo, keep the errorprone / nullaway / spotless / generator versions here aligned
+# with the root versions.toml.
+
+[versions]
+# Static-analysis stack. error_prone_core is pinned to 2.48.0 deliberately: it is the last release
+# that still ships the `predicates.type.DescendantOf` class NullAway 0.12.7 loads at runtime, and it
+# already supports running on JDK 21..25+. Bump errorprone and nullaway together.
+errorprone = "2.48.0"
+errorprone-plugin = "5.1.0"       # net.ltgt.errorprone
+nullaway = "0.12.7"               # com.uber.nullaway:nullaway (the Error Prone plugin)
+nullaway-plugin = "3.1.0"         # net.ltgt.nullaway
+spotless = "7.2.1"                # com.diffplug.spotless
+google-java-format = "1.35.0"     # runs on JDK 21..25+ (palantir-java-format does not, as of 2.x)
+jspecify = "1.0.0"                # @Nullable / @NonNull annotations NullAway understands
+
+# Language-level libraries (serde / tracing analogs; not vendor SDKs).
+jackson = "2.18.2"
+slf4j = "2.0.16"
+
+# Tests.
+junit = "5.11.4"
+
+[libraries]
+errorprone-core = { group = "com.google.errorprone", name = "error_prone_core", version.ref = "errorprone" }
+errorprone-annotations = { group = "com.google.errorprone", name = "error_prone_annotations", version.ref = "errorprone" }
+nullaway = { group = "com.uber.nullaway", name = "nullaway", version.ref = "nullaway" }
+jspecify = { group = "org.jspecify", name = "jspecify", version.ref = "jspecify" }
+
+jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
+
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+
+[plugins]
+errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone-plugin" }
+nullaway = { id = "net.ltgt.nullaway", version.ref = "nullaway-plugin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

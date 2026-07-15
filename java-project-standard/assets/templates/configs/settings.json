@@ -1,0 +1,7 @@
+{
+  "llmProvider": "mock",
+  "retriever": {
+    "topK": 5,
+    "rerankModel": "mock-rerank"
+  }
+}

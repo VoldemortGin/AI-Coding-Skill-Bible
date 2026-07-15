@@ -1,0 +1,26 @@
+# Formatting for .java is owned entirely by Spotless / google-java-format (2-space, 100 col) -- this
+# file only covers the non-Java files that Spotless does not touch, plus the generated-bindings
+# exclusion (polyglot-core-standard rule 4).
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.java]
+indent_style = space
+indent_size = 2
+
+[*.{kts,kt}]
+indent_style = space
+indent_size = 4
+
+[*.{json,yml,yaml,toml,properties}]
+indent_style = space
+indent_size = 2
+
+# Generated bindings are never formatted: vendored artifacts, governed via the hand-written bridge.
+[**/generated/**]
+ignore = true

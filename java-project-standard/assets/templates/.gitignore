@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+**/build/
+local.properties
+
+# Java
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Secrets
+.env
+*.keystore
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# Note: the Gradle wrapper (gradle/wrapper/*.jar + gradlew) SHOULD be committed, not ignored.
+# Generated bindings (polyglot-core-standard): tracked + linguist-generated + gate-excluded (not here).
