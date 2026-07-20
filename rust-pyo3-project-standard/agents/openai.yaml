@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust/PyO3 Project Standard"
+  short_description: "Strict exceptions and gates for Rust-backed Python packages"
+  default_prompt: "Use $rust-pyo3-project-standard to audit or structure this Rust/PyO3 Python package."

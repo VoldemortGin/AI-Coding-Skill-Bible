@@ -22,12 +22,18 @@ The agent's output ceiling equals the tightness of that loop.
 | `rust-project-standard` | Rust crate / workspace | `clippy -D warnings` + `rustfmt` + `cargo-deny` |
 | `swift-project-standard` | Swift / SwiftUI (SPM) | Swift 6 complete strict concurrency + swift-format + SwiftLint + warnings-as-errors |
 | `python-project-standard` | Python package | ruff + mypy + runtime type-checking, parse-don't-validate at boundaries |
+| `rust-pyo3-project-standard` | Rust-backed Python package (PyO3/Maturin) | Rust + Python strict gates, abi3/wheel/API-doc parity |
 | `frontend-project-standard` | TypeScript / React / Next (pnpm monorepo) | `tsc` strict + Zod at every boundary + ESLint + Prettier |
 | `android-project-standard` | Kotlin / Android (Gradle) | detekt + ktlint + `allWarningsAsErrors` + library `explicitApi()` |
 | `java-project-standard` | Java (Gradle multi-module) | Error Prone + NullAway (JSpecify) + Spotless + `-Werror` + JaCoCo coverage floor |
 | `polyglot-core-standard` | Cross-language seam | one canonical Rust core + derived UniFFI/PyO3 bindings + composed gate |
 
-The first six govern a **single language's internals**. **`polyglot-core-standard`** governs the **cross-language seam**: one canonical Rust core + thin hosts in each language, with generated bindings as vendored, gate-excluded artifacts and a composed `make check` as the only correctness judge. The two layers are complementary — a polyglot repo applies the core standard *at the seam* and the matching per-language standard *inside each host*.
+The language standards govern a **single language's internals**.
+**`rust-pyo3-project-standard`** is the narrow bridge profile for one
+Rust-backed Python distribution: it keeps both parent standards' hard gates
+while defining explicit Maturin/abi3 exceptions. **`polyglot-core-standard`**
+governs the broader **cross-language seam**: one canonical Rust core + thin
+hosts in multiple languages. These layers are complementary.
 
 ## What's in each skill
 
